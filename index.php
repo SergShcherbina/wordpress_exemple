@@ -505,7 +505,36 @@
             </div>
         </div>
 
-<!-- подьягиваем модуль footer ; ставить обязательно -->
+<!-- подтягиваем модуль footer ; ставить обязательно -->
 <?php
     get_footer();
 ?>
+
+<!-- хук filter - работает хук события но возвращает из ф-и return -->
+<!-- <?php
+    // function my_filter_function( $str ){
+    //     return 'Helo' . ' ' . $str ;
+    // };
+
+    // add_filter('my_filter', 'my_filter_function');
+    // echo apply_filters('my_filter', 'World');         //apply_filterS <-
+
+    //для откреплкния от хука истользуем remove_filter, 1арг сам хук, 2арг название ф-и, 3арг приоритет если установлени у ф-и
+    //remove_filter('my_filter', 'my_filter_function')
+?> -->
+
+
+<!-- хук события - работает как ф-я filter но ничего не возвращает -->
+<!-- <?php 
+    // function print_hello($text, $name){
+    //     echo 'Hello world' . ' ' . $text . ' ' . $name;
+    // };
+    // привязываем к самописному хуку функцию'print_hello', приоритет выполнения 10по умолчанию, кол-во арг если есть(по умолчанию 1)
+    // add_action('my_hook', 'print_hello', 10, 2);
+
+    //арг передвются при вызове хука
+    // do_action( 'my_hook', 'castomer', 'Serg');
+
+    //для откреплкния от хука истользуем remove_action, 1арг сам хук, 2арг название ф-и, 3арг приоритет если установлени у ф-и
+    //remove_action('my_filter', 'my_hook', 'print_hello', 10)
+?> -->

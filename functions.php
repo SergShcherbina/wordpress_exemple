@@ -2,6 +2,8 @@
 //настраиваем авто подключение стилей ХУК wp_enqueue_scripts, вторым аргументом название функуии 
 add_action('wp_enqueue_scripts', 'childhood_styles');
 add_action('wp_enqueue_scripts', 'childhood_scripts');
+//добавленип логотипа на страницу
+add_theme_support('custom-logo');
 
 //создаеи функию по подключению стилей с названием из второго аргумента выше
 function childhood_styles(){

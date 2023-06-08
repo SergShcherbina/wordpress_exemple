@@ -43,8 +43,8 @@
                             <div class="header__contacts-item">
                                 <img src="<?php echo bloginfo('template_url');?>/assets/img/icons/svg/email.svg" alt="почта" class="header__contacts-logo">
                                 
-                                <!-- для изменения во всех частях одновременно одного значения наприсер почты, нужно указать id страницы 2-м параметром 
-                                посмотреть есго можнов url страницы при редактировании, в этом случае id=2 (?post=2&action=edit)-->
+                                <!-- для изменения во всех частях одновременно одного значения например почты/телефона, нужно указать id страницы 2-м параметром 
+                                посмотреть его можнов url страницы при редактировании, в этом случае id=2 (?post=2&action=edit)-->
                                 <a href="mailto:<?php the_field('email', 2) ?>" class="header__contacts-mail"><?php the_field('email', 2) ?></a>
 
                             </div>
@@ -58,7 +58,9 @@
                             </div>
                             <div class="header__contacts-item">
                                 <img src="<?php echo bloginfo('template_url');?>/assets/img/icons/svg/pointer.svg" alt="указатель" class="header__contacts-logo">
-                                <address> <?php the_field('address') ?> </address>
+                                
+                                <!-- для переноса на новую строку в ACF установить: Область текста и в New lite - авто добавление <br> -->
+                                <address> <?php the_field('address', 2) ?> </address>
                             </div>
                         </div>
                     </div>

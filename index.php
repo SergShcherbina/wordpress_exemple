@@ -183,7 +183,7 @@
                                 <div class="toys__item-title"><?php the_title(); ?></div>
                                 <div class="toys__item-descr">
                                     <!-- название из группы полей -->
-                                    <?php the_field('toys_deskription') ?>                            
+                                    <?php the_field('toys_description') ?>                            
                                 </div>
                                 <div class="minibutton toys__trigger">Подробнее</div>
                             </div>
@@ -198,25 +198,42 @@
                 <h2 class="subtitle">Развивающие игрушки</h2>
                 <div class="toys__wrapper">
 
-                    <div class="toys__item" style="background-image: url(<?php echo bloginfo('template_url');?>/assets/img/toy_7.jpg)">
+                <?php
+                    // ф-я по выведению постов/записей
+                    $my_posts = get_posts( array(
+                        'numberposts' => -1,                 //кол-во постов, -1 озн высе посты
+                        'category_name'    => 'edu_toys',    //как ярлык рубрики  
+                        'orderby'     => 'date',             //сортировка по дате
+                        'order'       => 'ASC',              //ASC сортировка в обр порядке
+                        'post_type'   => 'post',
+                        'suppress_filters' => true,          // подавление работы фильтров изменения SQL запроса
+                    ) );
+                    
+                    global $post;
+                    
+                    foreach( $my_posts as $post ){
+                        setup_postdata( $post );
+                        ?>
+                    <div class="toys__item" style="background-image: url(<?php 
+                            if(has_post_thumbnail()) {
+                                the_post_thumbnail_url();          
+                            } else {
+                                echo get_template_directory_uri() . '/assets/img/not-found.jpg'; 
+                            }
+                        ?>)">
                         <div class="toys__item-info">
-                            <div class="toys__item-title">Воздушный змей</div>
+                            <div class="toys__item-title"> <?php the_title(); ?> </div>
                             <div class="toys__item-descr">
-                                Кто в детстве не хотел научиться летать? А змей поможет поймать ветер и унести все заботы далеко-далеко...    
+                                <?php the_field('toys_description'); ?>    
                             </div>
                             <div class="minibutton toys__trigger">Подробнее</div>
                         </div>
                     </div>
-
-                    <div class="toys__item" style="background-image: url(<?php echo bloginfo('template_url');?>/assets/img/toy_8.jpg)">
-                        <div class="toys__item-info">
-                            <div class="toys__item-title">Музыкальные</div>
-                            <div class="toys__item-descr">
-                                Попробуйте заинтересовать ребенка музыкой! Может в нем таится будущий Джаред Лето!
-                            </div>
-                            <div class="minibutton toys__trigger">Подробнее</div>
-                        </div>
-                    </div>
+                    <?php
+                    }
+                    wp_reset_postdata(); // сброс
+                    ?>
+                </div>
 
                 </div>
                 <div class="row">
@@ -322,10 +339,25 @@
                             <?php the_field('about_location') ?> 
                         </div>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6 " >
+                        <!-- 1) Перейдите на сайт Карты Google. -->
+                        <!-- 2) Наберите адрес или географическое название и нажмите кнопку с лупой («Поиск на карте»). -->
+                        <!-- 3) Нажать в настройках ссылка/код  -> копировать HTML -->
+                        <!-- получится такой код который можно вставить в верстку или создать текстовок поле в ACF поле 
+                        и вставить в верстку<?php //the_field('имя поля') ?> -->                  
+                        <!-- <iframe 
+                            width="500" 
+                            height="350" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2246.2151262789484!2d37.502392777428575!3d55.73739107307851!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54bfde5f10a0f%3A0x658c8e17c268f60d!2z0YPQuy4g0JLQsNGB0LjQu9C40YHRiyDQmtC-0LbQuNC90L7QuSwgMSwg0JzQvtGB0LrQstCwLCDQoNC-0YHRgdC40Y8sIDEyMTA5Ng!5e0!3m2!1sru!2sby!4v1686469855740!5m2!1sru!2sby" >
+                        </iframe> -->
                         <div id="map" class="contacts__map">
                         </div>
                     </div>
+                    
                 </div>
                 <div class="row">
                     <div class="col-md-6">
@@ -530,32 +562,38 @@
                         <div class="feedslider glide">
                             <div class="glide__track" data-glide-el="track">
                                 <ul class="glide__slides">
+
+                                <!-- выводим слайдер с отзывами -->
+                                <?php
+                                    $my_posts = get_posts( array(
+                                        'numberposts' => -1,                 //кол-во постов, -1 озн высе посты
+                                        'category_name'    => 'reviews',     //как ярлык рубрики  
+                                        'orderby'     => 'date',             //сортировка по дате
+                                        'order'       => 'ASC',              //ASC сортировка в обр порядке
+                                        'post_type'   => 'post',
+                                        'suppress_filters' => true,          // подавление работы фильтров изменения SQL запроса
+                                    ) );
+                                    
+                                    global $post;
+                                    
+                                    foreach( $my_posts as $post ){
+                                        setup_postdata( $post );
+                                        ?>
+
                                     <li class="glide__slide">
                                         <div class="feedslider__title">
-                                            Иванов Игорь
+                                            <?php the_title(); ?>            
                                         </div>
                                         <div class="feedslider__text">
-                                            Спасибо огромное за вежливость и терпение. Обратился к вам только с идеей для подарка, а вы развили её до полноценного проекта! Так что мой сын теперь круглые сутки играет с железной дорогой, построенной по его планам)
-                                            <br><br>
-                                            Отдельное спасибо менеджеру Маргарите за терпение и стойкость!
+                                            <?php the_field('review_1'); ?>
                                         </div>
                                     </li>
-                                    <li class="glide__slide">
-                                        <div class="feedslider__title">
-                                            Черкессов Алексей Дмитриевич
-                                        </div>
-                                        <div class="feedslider__text">
-                                            Заказывал у ребят целую партию игрушек для детского сада. Новый год прошел на ура! Теперь все детишки счастливы и не расстаются со своими подарками, а самые хитрые спрашивают когда следующие праздники)
-                                        </div>
-                                    </li>
-                                    <li class="glide__slide">
-                                        <div class="feedslider__title">
-                                            Анна Сергеевна
-                                        </div>
-                                        <div class="feedslider__text">
-                                            Решила к дню рождения своей малышки заказать подарки здесь. И ни сколько не жалею! Мишка именно такой, как я хотела, прямо как у меня в детстве: мягкий, приятный на ощупь и оочень милый. Сразу видно, что ручная работа.
-                                        </div>
-                                    </li>
+                                    
+                                    <?php
+                                    }
+                                    wp_reset_postdata(); // сброс
+                                    ?>
+
                                 </ul>
                             </div>
 
